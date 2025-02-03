@@ -31,9 +31,9 @@ Note: 5432 is default PostgreSQL port number.
 This will generate a prisma folder with a file called prisma.schema inside of it. This file is where we will create our database models.
 
 
-General Note:
+General Notes:
 
-npx prisma generate
+1. npx prisma generate
 
 Run above command in every scenario mentioned below.
 - ✅ After modifying schema.prisma (e.g., adding new models, fields, or relations).
@@ -41,8 +41,8 @@ Run above command in every scenario mentioned below.
 - ✅ After changing the DATABASE_URL.
 - ✅ If Prisma Client is missing or outdated.
 
-- To View your database run following command:
-npx prisma studio
+2. To View your database run following command
+*npx prisma studio*
 
 
 

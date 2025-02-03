@@ -21,7 +21,7 @@ Note: 5432 is default PostgreSQL port number.
 
 4. Setup the Prisma.
 - Install Prisma client
-npm install @prisma/client
+~npm install @prisma/client
 
 - Install prisma as a dev dependency
 npm install prisma -D
@@ -37,10 +37,10 @@ General Note:
 npx prisma generate
 
 Run above command in every scenario mentioned below.
-✅ After modifying schema.prisma (e.g., adding new models, fields, or relations).
-✅ After running migrations (npx prisma migrate dev).
-✅ After changing the DATABASE_URL.
-✅ If Prisma Client is missing or outdated.
+- ✅ After modifying schema.prisma (e.g., adding new models, fields, or relations).
+- ✅ After running migrations (npx prisma migrate dev).
+- ✅ After changing the DATABASE_URL.
+- ✅ If Prisma Client is missing or outdated.
 
 - To View your database run following command:
 npx prisma studio

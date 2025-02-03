@@ -20,14 +20,13 @@ DATABASE_URL="postgres://YourUserName:YourPassword@localhost:5432/YourDatabaseNa
 Note: 5432 is default PostgreSQL port number.
 
 4. Setup the Prisma.
-- Install Prisma client
-~npm install @prisma/client
+- Install Prisma client *npm install @prisma/client*
 
 - Install prisma as a dev dependency
-npm install prisma -D
+*npm install prisma -D*
 
 - Initialize Prisma
-npx prisma init
+*npx prisma init*
 
 This will generate a prisma folder with a file called prisma.schema inside of it. This file is where we will create our database models.
 

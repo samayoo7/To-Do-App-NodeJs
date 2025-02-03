@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./src/assets/logo/Prisma_Node.png" alt="Logo" />
+</p>
+
 # To-Do-App-NodeJs
 PostgreSql with Prisma
 

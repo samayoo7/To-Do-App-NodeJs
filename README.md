@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./src/assets/logo/Prisma_Node.png" alt="Logo" style="min-width: 100px; max-width: 500px; width: 50%;" />
+  <img src="./src/assets/logo/Prisma_Node.png" alt="Logo" style="min-width: 100px; max-width: 500px; width: 100%;" />
 </p>
 
 # To-Do-App-NodeJs

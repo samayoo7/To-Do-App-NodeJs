@@ -1,11 +1,11 @@
 const prisma = require('../config/db');
 
-const createOne = async (taskData) => {
-	return await prisma.task.create({ data: taskData });
+const createOne = async (modal, data) => {
+	return await prisma[modal].create({ data });
 };
 
 const updateOne = async (id, data) => {
-	return await prisma.task.update({
+	return await prisma.tasks.update({
 		where: { id: Number(id) },
 		data: {
 			title: data.title,
@@ -15,7 +15,7 @@ const updateOne = async (id, data) => {
 };
 
 const deleteOne = async (id) => {
-	return await prisma.task.delete({
+	return await prisma.tasks.delete({
 		where: {
 			id: Number(id)
 		}
@@ -23,7 +23,7 @@ const deleteOne = async (id) => {
 };
 
 const getTasks = async (search, isCompleted) => {
-	return await prisma.task.findMany({
+	return await prisma.tasks.findMany({
 		where: {
 			AND: [
 				search ? {
@@ -41,11 +41,16 @@ const getTasks = async (search, isCompleted) => {
 			createdAt: 'desc'
 		}
 	});
-}
+};
+
+const findUnique = async (modal, email) => {
+	return await prisma[modal].findUnique({ where: { email } });
+};
 
 module.exports = {
 	createOne,
 	updateOne,
 	deleteOne,
-	getTasks
+	getTasks,
+	findUnique
 };

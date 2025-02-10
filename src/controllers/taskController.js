@@ -1,10 +1,15 @@
-const taskService = require('../services/taskService');
+const dbService = require('../services/dbService');
 const responseHandler = require('../utils/responseHandler');
 
 const createTask = async (req, res) => {
+	console.log("🚀 ~ createTask ~ req:", req)
 	try {
-		const task = await taskService.createOne(req.body)
-		return responseHandler(res, 201, true, 'Task created successfully!', task);
+		const task = await dbService.createOne('tasks', req.body)
+		return responseHandler(res, 201, true, 'Task created successfully!', {
+			id: task.id,
+			title: task.title,
+			isCompleted: task.isCompleted
+		});
 	} catch (error) {
 		return responseHandler(res, 500, false, 'Internal server error!', null, error.message);
 	}
@@ -15,9 +20,13 @@ const updateTask = async (req, res) => {
 	if (!id) return responseHandler(res, 400, false, 'Task ID is required!', null);
 
 	try {
-		const task = await taskService.updateOne(id, req.body);
+		const task = await dbService.updateOne(id, req.body);
 
-		return responseHandler(res, 200, true, 'Task updated successfully!', task);
+		return responseHandler(res, 200, true, 'Task updated successfully!', {
+			id: task.id,
+			title: task.title,
+			isCompleted: task.isCompleted
+		});
 	} catch (error) {
 		if (error.code === 'P2025') {
 			return responseHandler(res, 404, false, 'Task not found!', null);
@@ -29,11 +38,11 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return responseHandler(res, 400, false, 'Task Id is required!', null, error.message);
+		return responseHandler(res, 400, false, 'Task Id is required!', null);
 	}
 
 	try {
-		await taskService.deleteOne(id);
+		await dbService.deleteOne(id);
 		return responseHandler(res, 200, true, 'Task deleted successfully!', null); 
 	} catch (error) {
 		return responseHandler(res, 500, false, 'Internal server error!', null, error.message);
@@ -44,11 +53,11 @@ const getAllTasks = async (req, res) => {
 	try {
 		const { search, isCompleted } = req.query;
 
-		const tasks = await taskService.getTasks(search, isCompleted);
+		const tasks = await dbService.getTasks(search, isCompleted);
 
 		const groupedTasks = Object.entries(
-			tasks.reduce((acc, task) => {
-				const dateKey = task.createdAt.toISOString().split('T')[0];
+			tasks.reduce((acc, { createdAt, updatedAt, ...task }) => {
+				const dateKey = createdAt.toISOString().split('T')[0];
 				acc[dateKey] = acc[dateKey] || [];
 				acc[dateKey].push(task);
 				return acc;

@@ -4,25 +4,24 @@ const createOne = async (modal, data) => {
 	return await prisma[modal].create({ data });
 };
 
-const updateOne = async (id, data) => {
-	return await prisma.tasks.update({
+const updateOne = async (modal, id, data) => {
+	return await prisma[modal].update({
 		where: { id: Number(id) },
-		data: {
-			title: data.title,
-			isCompleted: data.isCompleted
-		}
+		data: data
 	});
 };
 
-const deleteOne = async (id) => {
-	return await prisma.tasks.delete({
+const deleteOne = async (modal, id) => {
+	return await prisma[modal].delete({
 		where: {
 			id: Number(id)
 		}
 	});
 };
 
-const getTasks = async (search, isCompleted) => {
+const getTasks = async (search, isCompleted, page = 1, limit = 10) => {
+	const skip = (page - 1) * limit;
+
 	return await prisma.tasks.findMany({
 		where: {
 			AND: [
@@ -39,7 +38,9 @@ const getTasks = async (search, isCompleted) => {
 		},
 		orderBy: {
 			createdAt: 'desc'
-		}
+		},
+		skip,
+		take: limit
 	});
 };
 

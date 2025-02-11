@@ -2,7 +2,6 @@ const dbService = require('../services/dbService');
 const responseHandler = require('../utils/responseHandler');
 
 const createTask = async (req, res) => {
-	console.log("🚀 ~ createTask ~ req:", req)
 	try {
 		const task = await dbService.createOne('tasks', req.body)
 		return responseHandler(res, 201, true, 'Task created successfully!', {
@@ -20,7 +19,7 @@ const updateTask = async (req, res) => {
 	if (!id) return responseHandler(res, 400, false, 'Task ID is required!', null);
 
 	try {
-		const task = await dbService.updateOne(id, req.body);
+		const task = await dbService.updateOne('tasks', id, req.body);
 
 		return responseHandler(res, 200, true, 'Task updated successfully!', {
 			id: task.id,
@@ -42,7 +41,7 @@ const deleteTask = async (req, res) => {
 	}
 
 	try {
-		await dbService.deleteOne(id);
+		await dbService.deleteOne('tasks', id);
 		return responseHandler(res, 200, true, 'Task deleted successfully!', null); 
 	} catch (error) {
 		return responseHandler(res, 500, false, 'Internal server error!', null, error.message);
@@ -51,9 +50,9 @@ const deleteTask = async (req, res) => {
 
 const getAllTasks = async (req, res) => {
 	try {
-		const { search, isCompleted } = req.query;
+		const { search, isCompleted, page = 1, limit = 10 } = req.query;
 
-		const tasks = await dbService.getTasks(search, isCompleted);
+		const tasks = await dbService.getTasks(search, isCompleted, Number(page), Number(limit));
 
 		const groupedTasks = Object.entries(
 			tasks.reduce((acc, { createdAt, updatedAt, ...task }) => {

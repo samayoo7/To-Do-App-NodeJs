@@ -3,7 +3,6 @@ const responseHandler = require('../utils/responseHandler');
 
 const authenticate = (req, res, next) => {
 	const authHeader = req.headers.authorization;
-	console.log("🚀 ~ authenticate ~ authHeader:", authHeader)
 
 	if (!authHeader || !authHeader.startsWith('Bearer ')) {
 		return responseHandler(res, 401, false, 'Unauthorized! No token provided!');

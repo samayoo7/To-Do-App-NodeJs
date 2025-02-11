@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 const taskRoutes = require('./src/routes/taskRoutes');
 const authRoutes = require('./src/routes/authRoutes');
@@ -14,6 +14,6 @@ app.use('/api', taskRoutes);
 app.use('/api/auth', authRoutes);
 
 // Start the server
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
+app.listen(PORT, () => {
+	console.log(`Server started on port ${PORT}`);
 });
